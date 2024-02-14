@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>beginCTF 2024 | Crystal&#39;s Blog</title>
+    <title>NSSCTF Round#18 | Crystal&#39;s Blog</title>
     <meta name="author" content="Crystal" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -150,14 +150,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>beginCTF 2024</h1>
+        <h1>NSSCTF Round#18</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/2/6
+            2024/2/14
         </span>
         
         
@@ -177,58 +177,104 @@
     </div>
     
     <div class="content" v-pre>
-        <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h4 id="1-real-check-in"><a href="#1-real-check-in" class="headerlink" title="1. real check in"></a>1. real check in</h4><p>base64解码即可</p>
-<h4 id="2-tupper"><a href="#2-tupper" class="headerlink" title="2. tupper"></a>2. tupper</h4><p>好多文件，先拼接起来</p>
-<pre><code>for i in range(0, 673, 4):
-    filename = str(i) + &#39;.txt&#39;
-    with open(filename, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f:
-        data = f.readline()
-        print(data, end=&#39;&#39;)
+        <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h4 id="1-温馨的酒吧"><a href="#1-温馨的酒吧" class="headerlink" title="1. 温馨的酒吧"></a>1. 温馨的酒吧</h4><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nH4y1E7Hg/">视频链接</a></p>
+<p>是一个互动视频，深度优先搜索分别得到三段flag，合并起来即可</p>
+<pre><code>NSSCTF&#123;新年快乐_不要停下来啊_CTFer!&#125;
 </code></pre>
-<p>“&#x3D;”结尾，base64解码得到一串数字</p>
-<pre><code>1427819343272802604929857457555753432106234935254356265676646
-9704092874688354679371212444382298821342093450398907096976002
-4588075985357351721266575041311716849071730866595051439203000
-8580880964725679038437855378028289423975189862004114338331706
-4727136903634770936398518547900512548419486364915399253941245
-9112052624935911584977082191264535874566373028887013033822107
-4862980008182168428318736854360155977843173500679476154241300
-6621219207322808449232050578852431361678745355776921132352419
-931907838205001184
+<h4 id="2-Number-7"><a href="#2-Number-7" class="headerlink" title="2. Number 7"></a>2. Number 7</h4><pre><code>Inside No.9 or Inside No.7 ?
+182A1918071C152E0A4737263A3E780A6F6A075A112742777C687D0700773F7D39560063487D
 </code></pre>
-<p>搜索Tupper，发现是<strong>Tupper’s Self-Referential Formula（塔珀自指公式）</strong></p>
-<p>网站：<a target="_blank" rel="noopener" href="https://tuppers-formula.ovh/">Tuppers-Formula-Tools</a></p>
-<h4 id="3-devil’s-word"><a href="#3-devil’s-word" class="headerlink" title="3. devil’s word"></a>3. devil’s word</h4><p>一眼温州话+16进制数</p>
-<pre><code>leng -&gt; 0 lia -&gt; 2 sa -&gt; 3 sii -&gt; 4 ng -&gt; 5 leu -&gt; 6 cai -&gt; 7 bo -&gt; 8 jau -&gt; 9
+<p>根据提示，猜测为Cisco Type7编码</p>
+<p>解码得到flag:</p>
+<pre><code>NSSCTF&#123;H4PPY_N3WY34r_4ND_N55CTF_18TH&#125;
 </code></pre>
-<p>构造字典</p>
-<pre><code>s = &#39;leu lia leu ng leu cai leu jau leu e cai b cai jau sa leng cai 
-ng ng f leu b leu e sa leng cai cai ng f cai cai sa sa leu e cai a leu 
-bo leu f cai ng ng f leu sii leu jau sa sii leu c leu ng leu sa cai sii cai d&#39;
-lib = &#123;&#39;leng&#39;:&#39;0&#39;,&#39;lia&#39;:&#39;2&#39;,&#39;sa&#39;:&#39;3&#39;,&#39;sii&#39;:&#39;4&#39;,&#39;ng&#39;:&#39;5&#39;,&#39;leu&#39;:&#39;6&#39;,&#39;cai&#39;:&#39;7&#39;,
-&#39;bo&#39;:&#39;8&#39;,&#39;jau&#39;:&#39;9&#39;,&#39;a&#39;:&#39;A&#39;,&#39;b&#39;:&#39;B&#39;,&#39;c&#39;:&#39;C&#39;,&#39;d&#39;:&#39;D&#39;,&#39;e&#39;:&#39;E&#39;,&#39;f&#39;:&#39;F&#39;&#125;
+<h4 id="3-usersssssssss"><a href="#3-usersssssssss" class="headerlink" title="3. usersssssssss"></a>3. usersssssssss</h4><pre><code>这么多用户，总有一个用户拥有flag
+（用户名取自附件中的字典，密码就是用户名的md5sum）
+</code></pre>
+<p>首先要得到用户名对应的密码，使用Powershell执行以下脚本</p>
+<pre><code class="shell">Get-Content -Path &quot;C:\Users\Rosei\Desktop\wordlist.txt&quot; | ForEach-Object &#123;
+    $string = $_.Trim()
+    $md5 = [System.Security.Cryptography.MD5]::Create()
+    $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($string))
+    $hashString = [System.BitConverter]::ToString($hashBytes) -replace &#39;-&#39;, &#39;&#39;
+    $hashString.ToLower()
+&#125;
+</code></pre>
+<p>得到密码后保存在 password.txt 中，然后就是ssh连接环节</p>
+<p>方法一:</p>
+<pre><code class="python">def generate_ssh_commands_with_passwords(usernames_file, passwords_file, hostname, port):
+    with open(usernames_file, &#39;r&#39;) as user_file, open(passwords_file, &#39;r&#39;) as password_file:
+        for user_line, password_line in zip(user_file, password_file):
+            username = user_line.strip()
+            password = password_line.strip()
+            ssh_command = f&#39;ssh &#123;username&#125;@&#123;hostname&#125; -p &#123;port&#125;\n&#123;password&#125;&#39;
+            yield ssh_command
 
-str_list = s.split()
-n = len(str_list)
-for i in range(n):
-    str_list[i] = lib[str_list[i]]
-str_new = []
-for i in range(0, n, 2):
-    str_new.append(str_list[i]+str_list[i+1])
-for i in str_new:
-    print(chr(int(i,16)),end=&#39;&#39;)
+def main():
+    hostname = &#39;node2.anna.nssctf.cn&#39;
+    port = 28765
+    usernames_file = &#39;wordlist.txt&#39;
+    passwords_file = &#39;password.txt&#39;
+
+    for command in generate_ssh_commands_with_passwords(usernames_file, passwords_file, hostname, port):
+        print(command)
+
+if __name__ == &quot;__main__&quot;:
+    main()
 </code></pre>
-<p>得到flag</p>
-<h4 id="4-下一站上岸"><a href="#4-下一站上岸" class="headerlink" title="4. 下一站上岸"></a>4. 下一站上岸</h4><p><img src="/img/%E4%B8%8B%E4%B8%80%E7%AB%99%E4%B8%8A%E5%B2%B8.png" alt="1"></p>
-<p>010editor打开，末尾发现垃圾字符</p>
-<pre><code>5o+Q56S6OuaRqeaWr+WvhueggQ==
+<p>执行python脚本，输出用户名和密码，逐个连接ssh，最终在 laminous 用户文件下发现flag</p>
+<pre><code>ssh laminous@node2.anna.nssctf.cn -p 28765
+laminous@node2.anna.nssctf.cn&#39;s password:
+laminous@4cdb23f99f054406:~$ ls
+flag.txt
+laminous@4cdb23f99f054406:~$ cat flag.txt
+NSSCTF&#123;873f3a80-97ef-493e-b571-4535798ee471&#125;
 </code></pre>
-<p>base64解码，提示是摩斯密码</p>
-<p>按照交点数为012得到： 221022201122120120111011110222012101</p>
-<p>0一定是间隔符（因为只有0成单出现）两种情况替换’-‘和’.’得到flag</p>
-<h4 id="5-where-is-crazyman-v1-0"><a href="#5-where-is-crazyman-v1-0" class="headerlink" title="5. where is crazyman v1.0"></a>5. where is crazyman v1.0</h4><p>谷歌识图</p>
-<h4 id="6-where-is-crazyman-v2-0"><a href="#6-where-is-crazyman-v2-0" class="headerlink" title="6. where is crazyman v2.0"></a>6. where is crazyman v2.0</h4><p>谷歌识图</p>
-<h4 id="7-where-is-crazyman-v3-0"><a href="#7-where-is-crazyman-v3-0" class="headerlink" title="7. where is crazyman v3.0"></a>7. where is crazyman v3.0</h4><p>谷歌地图，找到酒店旁边的星巴克，评论里有base64编码的flag</p>
+<p>方法二:</p>
+<p>使用python脚本依次检查用户文件夹是否为空，若不为空则输出用户名</p>
+<pre><code>import paramiko
+
+def read_usernames(filename):
+    with open(filename, &#39;r&#39;) as file:
+        return [line.strip() for line in file]
+
+def read_passwords(filename):
+    with open(filename, &#39;r&#39;) as file:
+        return [line.strip() for line in file]
+
+def list_files_and_folders(ssh, path):
+    command = f&quot;ls -l &#123;path&#125;&quot;
+    stdin, stdout, stderr = ssh.exec_command(command)
+    return stdout.read().decode()
+
+def ssh_connect(username, password):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    try:
+        ssh.connect(&#39;node2.anna.nssctf.cn&#39;, username=username, password=password, port=28765)
+        return ssh
+    except Exception as e:
+        print(f&quot;Failed to connect with &#123;username&#125;: &#123;e&#125;&quot;)
+        return None
+
+if __name__ == &quot;__main__&quot;:
+    usernames_file = &#39;usernames.txt&#39;
+    passwords_file = &#39;passwords.txt&#39;
+    usernames = read_usernames(usernames_file)
+    passwords = read_passwords(passwords_file)
+
+    if len(usernames) != len(passwords):
+        print(&quot;Error: Number of usernames and passwords do not match!&quot;)
+        exit()
+
+    for username, password in zip(usernames, passwords):
+        ssh = ssh_connect(username, password)
+        if ssh:
+            print(f&quot;Files in &#123;username&#125;: &quot;)
+            root_contents = list_files_and_folders(ssh, f&quot;/home/&#123;username&#125;&quot;)
+            print(root_contents)
+            ssh.close()
+</code></pre>
 
     </div>
     
