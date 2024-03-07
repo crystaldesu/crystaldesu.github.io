@@ -167,6 +167,147 @@
         
 
 <div class="post">
+    <a href="/Misc%E9%A2%98%E8%A7%A3-Stage-1/">
+        <h2 class="post-title">Misc题解 Stage 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/7
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h3 id="1-MTCTF-2021-Different-Puzzle"><a href="#1-MTCTF-2021-Different-Puzzle" class="headerlink" title="1. [MTCTF 2021] Different_Puzzle"></a>1. [MTCTF 2021] Different_Puzzle</h3><p>这些图片好像不能用蛮力</p>
+<p>拿到手是一个.vhd结尾的磁盘映像文件，里面是一堆黑条白条，看起来像条形码。还有一个flag.exe文件，打开提示需要密码。</p>
+<p>推测是通过拼接图片得到条形码，扫描得到文件密码。</p>
+<p>把null.vhd拖到winhex，按扇区地址升序排列。</p>
+<p><img src="/img/1_1.png" alt="1"></p>
+<p>从上到下手动拼接图片，得到条形码。</p>
+<p><img src="/img/1_2.jpg" alt="2"></p>
+<p><img src="/img/1_3.png" alt="3"></p>
+<p>扫描得到密码，打开flag.exe，得到flag.txt</p>
+<pre><code>flag&#123;af26d693-2de2-4b16-be49-d95e83a43f76&#125;
+</code></pre>
+<h3 id="2-Girlfriend’s-account"><a href="#2-Girlfriend’s-account" class="headerlink" title="2. Girlfriend’s account"></a>2. Girlfriend’s account</h3><p>大写中文金额转换问题，直接贴脚本</p>
+<pre><code class="python">import pandas as pd
+from decimal import Decimal
+
+dict1 = &#123;
+    &#39;零&#39;: Decimal(&#39;0&#39;),
+    &#39;壹&#39;: Decimal(&#39;1&#39;),
+    &#39;贰&#39;: Decimal(&#39;2&#39;),
+    &#39;叁&#39;: Decimal(&#39;3&#39;),
+    &#39;肆&#39;: Decimal(&#39;4&#39;),
+    &#39;伍&#39;: Decimal(&#39;5&#39;),
+    &#39;陆&#39;: Decimal(&#39;6&#39;),
+    &#39;柒&#39;: Decimal(&#39;7&#39;),
+    &#39;捌&#39;: Decimal(&#39;8&#39;),
+    &#39;玖&#39;: Decimal(&#39;9&#39;),
+&#125;
+
+def convert_to_number(s):
+    res = Decimal(&#39;0&#39;)
+    length = len(s)
+    for i in range(length):
+        if s[i] == &#39;佰&#39;:
+            res += dict1[s[i-1]] * Decimal(&#39;100&#39;)
+        elif s[i] == &#39;拾&#39;:
+            res += dict1[s[i-1]] * Decimal(&#39;10&#39;)
+        elif s[i] == &#39;元&#39; and s[i-1] != &#39;佰&#39; and s[i-1] != &#39;拾&#39;:
+            res += dict1[s[i-1]]
+        elif s[i] == &#39;角&#39;:
+            res += dict1[s[i-1]] / Decimal(&#39;10&#39;)
+        elif s[i] == &#39;分&#39;:
+            res += dict1[s[i-1]] / Decimal(&#39;100&#39;)
+    return res
+
+df = pd.read_excel(&#39;Misc-Girlfriends_account-.xlsx&#39;)
+
+overall_total = Decimal(&#39;0&#39;)
+
+for index, row in df.iterrows():
+    amount = convert_to_number(str(row[&#39;单件金额&#39;]))
+    quantity = dict1[row[&#39;件数&#39;]]
+    overall_total += amount * quantity
+
+print(overall_total)
+</code></pre>
+<h3 id="3-DNUICTF-2021-你喜欢压缩包吗"><a href="#3-DNUICTF-2021-你喜欢压缩包吗" class="headerlink" title="3. [DNUICTF 2021] 你喜欢压缩包吗"></a>3. [DNUICTF 2021] 你喜欢压缩包吗</h3><p>压缩包套娃，每次的解压密码都和里面的压缩包名字相同。</p>
+<pre><code class="python">import zipfile
+import os
+
+def extract_zip(file_path, password):
+    with zipfile.ZipFile(file_path) as zfile:
+        zfile.extractall(members=zfile.namelist(), pwd=password.encode(&#39;utf-8&#39;))
+
+def get_next_zip(file_path):
+    names = os.listdir()
+    for name in names:
+        if name.endswith(&#39;.zip&#39;) and name != file_path:
+            return name
+    return None
+
+def main():
+    now = &quot;zip.zip&quot;
+
+    while True:
+        print(&quot;START &quot; + now)
+        zfile = zipfile.ZipFile(now)
+        password = zfile.namelist()[0].split(&#39;.&#39;)[0]
+        extract_zip(now, password)
+        zfile.close()
+
+        try:
+            os.remove(now)
+        except OSError as e:
+            print(e)
+
+        next_zip = get_next_zip(now)
+        if next_zip:
+            now = next_zip
+        else:
+            break
+
+        print(&#39;END &#39; + now)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p>最后得到233333.zip，六位纯数字密码，APR爆破得到sqlite数据库文件，搜索flag字段得到flag。</p>
+<h3 id="4-TQLCTF-2022-Ranma½"><a href="#4-TQLCTF-2022-Ranma½" class="headerlink" title="4. [TQLCTF 2022] Ranma½"></a>4. [TQLCTF 2022] Ranma½</h3><p>拖到CyberChef里</p>
+<p><img src="/img/1_4.png" alt="4"></p>
+<p>末尾得到 HTTPZB{QFOLP6_KRZ1Q} 看出来是换位密码。都试一遍，发现是维吉尼亚爆破，得到flag。</p>
+<pre><code>TQLCTF&#123;CODIN6_WOR1D&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/CTF/" style="color: #03a9f4">CTF</a>
+        </span>
+        
+    </div>
+    <a href="/Misc%E9%A2%98%E8%A7%A3-Stage-1/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/NSSCTF-Round-18/">
         <h2 class="post-title">NSSCTF Round#18</h2>
     </a>
@@ -387,7 +528,7 @@ for i in str_new:
         
         <span class="tag">
             
-            <a href="/tags/CTF/" style="color: #03a9f4">CTF</a>
+            <a href="/tags/CTF/" style="color: #ff7d73">CTF</a>
         </span>
         
     </div>
