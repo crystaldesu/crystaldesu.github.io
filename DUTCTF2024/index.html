@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>Archives | Crystal&#39;s Blog</title>
+    <title>DUTCTF2024 | Crystal&#39;s Blog</title>
     <meta name="author" content="Crystal" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -31,6 +31,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -144,120 +148,60 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>DUTCTF2024</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/18
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
             
-<div id="archives">
-    
-    <div id="timeline-wrap" ref="timeline">
-        
-        <div class="timeline" data-title="beginctf2024">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/2/6</div>
-                <a href="/beginCTF-2024/">
-                    <h3>beginCTF 2024</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/CTF/" style="color: #ff7d73">CTF</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="nssctfround#18">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/2/14</div>
-                <a href="/NSSCTF-Round-18/">
-                    <h3>NSSCTF Round#18</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/CTF/" style="color: #ff7d73">CTF</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="misc题解stage1">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/3/7</div>
-                <a href="/Misc%E9%A2%98%E8%A7%A3-Stage-1/">
-                    <h3>Misc题解 Stage 1</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/CTF/" style="color: #ffa2c4">CTF</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="dutctf2024">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/3/18</div>
-                <a href="/DUTCTF2024/">
-                    <h3>DUTCTF2024</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/CTF/" style="color: #00a596">CTF</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
+            
+            <span class="tag">
+                
+                <a href="/tags/CTF/" style="color: #ffa2c4">CTF</a>
+            </span>
+            
+        </span>
         
     </div>
+    
+    <div class="content" v-pre>
+        <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h4 id="1-我真的不玩星穹铁道"><a href="#1-我真的不玩星穹铁道" class="headerlink" title="1. 我真的不玩星穹铁道"></a>1. 我真的不玩星穹铁道</h4><p><img src="/img/dutctf2024-1.png" alt="1"></p>
+<p>根据图片底下一行{}可知这里是flag的变形，根据题目推测出是星穹铁道的文字</p>
+<p>搜索找到文字对照表，对照翻译得出flag</p>
+<p><img src="/img/dutctf2024-5.png" alt="5"></p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h4 id="1-Big-Deeper"><a href="#1-Big-Deeper" class="headerlink" title="1. Big Deeper"></a>1. Big Deeper</h4><p>DeepSound是一款可以<strong>将文件添加到歌曲中的软件</strong>，<strong>可把非常私密的文件隐藏在歌曲里</strong>。</p>
+<p><img src="/img/dutctf2024-2.png" alt="2"></p>
+<p>提示需要密码，尝试输入文件名 <code>divedeep</code> 成功打开，得到 <code>flag.txt</code> </p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Hardworking666/article/details/12336355">https://blog.csdn.net/Hardworking666/article/details/12336355</a></p>
+<h4 id="2-CheckIn-交流胡子款式"><a href="#2-CheckIn-交流胡子款式" class="headerlink" title="2. CheckIn - 交流胡子款式"></a>2. CheckIn - 交流胡子款式</h4><p>010editor打开，文件头为 <code>HOI4bin5*</code> ，搜一下发现是钢丝存档。</p>
+<p>搜索字符串 <code>flag&#123;</code> 和 <code>dutctf&#123;</code> 都没有结果，猜测是经过了编码。</p>
+<p>于是搜 <code>flag&#123;</code>  格式的base64编码头字符 <code>Zmxh</code></p>
+<p><img src="/img/dutctf2024-3.png" alt="3"></p>
+<pre><code>ZmxhZ3tiYTVfMXNfaDRyZSF9j0
+</code></pre>
+<p><img src="/img/dutctf2024-4.png" alt="4"></p>
+<p>base64解码得到flag</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
 </div>
 
             <footer id="footer">
@@ -288,6 +232,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>

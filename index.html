@@ -167,6 +167,61 @@
         
 
 <div class="post">
+    <a href="/DUTCTF2024/">
+        <h2 class="post-title">DUTCTF2024</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/18
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h4 id="1-我真的不玩星穹铁道"><a href="#1-我真的不玩星穹铁道" class="headerlink" title="1. 我真的不玩星穹铁道"></a>1. 我真的不玩星穹铁道</h4><p><img src="/img/dutctf2024-1.png" alt="1"></p>
+<p>根据图片底下一行{}可知这里是flag的变形，根据题目推测出是星穹铁道的文字</p>
+<p>搜索找到文字对照表，对照翻译得出flag</p>
+<p><img src="/img/dutctf2024-5.png" alt="5"></p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h4 id="1-Big-Deeper"><a href="#1-Big-Deeper" class="headerlink" title="1. Big Deeper"></a>1. Big Deeper</h4><p>DeepSound是一款可以<strong>将文件添加到歌曲中的软件</strong>，<strong>可把非常私密的文件隐藏在歌曲里</strong>。</p>
+<p><img src="/img/dutctf2024-2.png" alt="2"></p>
+<p>提示需要密码，尝试输入文件名 <code>divedeep</code> 成功打开，得到 <code>flag.txt</code> </p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Hardworking666/article/details/12336355">https://blog.csdn.net/Hardworking666/article/details/12336355</a></p>
+<h4 id="2-CheckIn-交流胡子款式"><a href="#2-CheckIn-交流胡子款式" class="headerlink" title="2. CheckIn - 交流胡子款式"></a>2. CheckIn - 交流胡子款式</h4><p>010editor打开，文件头为 <code>HOI4bin5*</code> ，搜一下发现是钢丝存档。</p>
+<p>搜索字符串 <code>flag&#123;</code> 和 <code>dutctf&#123;</code> 都没有结果，猜测是经过了编码。</p>
+<p>于是搜 <code>flag&#123;</code>  格式的base64编码头字符 <code>Zmxh</code></p>
+<p><img src="/img/dutctf2024-3.png" alt="3"></p>
+<pre><code>ZmxhZ3tiYTVfMXNfaDRyZSF9j0
+</code></pre>
+<p><img src="/img/dutctf2024-4.png" alt="4"></p>
+<p>base64解码得到flag</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/CTF/" style="color: #ff7d73">CTF</a>
+        </span>
+        
+    </div>
+    <a href="/DUTCTF2024/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/Misc%E9%A2%98%E8%A7%A3-Stage-1/">
         <h2 class="post-title">Misc题解 Stage 1</h2>
     </a>
@@ -300,7 +355,7 @@ if __name__ == &quot;__main__&quot;:
         
         <span class="tag">
             
-            <a href="/tags/CTF/" style="color: #03a9f4">CTF</a>
+            <a href="/tags/CTF/" style="color: #ffa2c4">CTF</a>
         </span>
         
     </div>
@@ -437,7 +492,7 @@ if __name__ == &quot;__main__&quot;:
         
         <span class="tag">
             
-            <a href="/tags/CTF/" style="color: #03a9f4">CTF</a>
+            <a href="/tags/CTF/" style="color: #00bcd4">CTF</a>
         </span>
         
     </div>
@@ -528,7 +583,7 @@ for i in str_new:
         
         <span class="tag">
             
-            <a href="/tags/CTF/" style="color: #ff7d73">CTF</a>
+            <a href="/tags/CTF/" style="color: #03a9f4">CTF</a>
         </span>
         
     </div>
